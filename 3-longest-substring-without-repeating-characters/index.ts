@@ -1,24 +1,17 @@
-function lengthOfLongestSubstring(s: string) {
-  if (s.length < 2) {
-    return s.length;
-  }
-
-  let slow = 0;
-  let fast = 1;
+function lengthOfLongestSubstring(s) {
+  let left = 0;
+  let right = 0;
   let maxLen = 0;
   let hash = new Set();
-  hash.add(s[slow]);
 
-  while (fast != s.length - 1) {
-    if (hash.has(s[fast])) {
-      hash = new Set();
-      hash.add(s[slow]);
-      maxLen = hash.size;
-      slow = fast;
-      fast++;
+  while (right < s.length) {
+    if (hash.has(s[right])) {
+      hash.delete(s[left]);
+      left++;
     } else {
-      hash.add(s[fast]);
-      fast++;
+      hash.add(s[right]);
+      maxLen = Math.max(hash.size, maxLen);
+      right++;
     }
   }
   return maxLen;
